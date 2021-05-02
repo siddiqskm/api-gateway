@@ -1,0 +1,6 @@
+# Service pinning need to be taken care in here
+logging
+docker
+flask
+pyyaml
+Flask-Pydantic

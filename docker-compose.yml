@@ -1,0 +1,15 @@
+version: '3'
+services:
+  payment:
+    build: ./payment
+    image: payment-service:latest
+    container_name: payment
+    ports:
+      - "4000:4000"
+
+  order:
+    build: ./order
+    image: order-service:latest
+    container_name: order
+    ports:
+      - "5000:5000"
