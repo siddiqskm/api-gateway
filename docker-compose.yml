@@ -7,9 +7,16 @@ services:
     ports:
       - "4000:4000"
 
-  order:
+  order1:
     build: ./order
     image: order-service:latest
-    container_name: order
+    container_name: order1
     ports:
       - "5000:5000"
+
+  order2:
+    build: ./order
+    image: order-service:latest
+    container_name: order2
+    ports:
+      - "7000:5000"

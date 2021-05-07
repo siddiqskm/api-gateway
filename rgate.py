@@ -59,15 +59,26 @@ def catch_all(path):
         #
         print("Serving request on any of the URLs: %s" % bknd_srv.service_urls)
         try:
+            #
+            # Round Robin selection of service URLs
+            #
+            if bknd_srv.service_url_to_pick < len(bknd_srv.service_urls) - 1:
+                bknd_srv.service_url_to_pick += 1
+            else:
+                bknd_srv.service_url_to_pick = 0
+
+            tp = bknd_srv.service_urls[bknd_srv.service_url_to_pick] + '/' + path
+            print("The index am selecting is: %s" % bknd_srv.service_url_to_pick)
+            print("Service URLs hitting is: %s" % tp)
             resp = requests.request(request.method, headers=request.headers,
-                                    url=random.choice(bknd_srv.service_urls))
-            print("Response from backend is: %s" % resp.json())
+                                    url=tp)
+            # print("Response from backend is: %s" % resp.json())
             print("Time Elapsed in request: %s" % resp.elapsed.microseconds)
-            return_resp = ServiceResponse(
-                body=resp.json().get('message'),
-                status_code=resp.status_code)
-            update_db(return_resp.status_code, resp.elapsed.microseconds)
-            return return_resp.dict()
+#            return_resp = ServiceResponse(
+#                body=resp.json().get('message'),
+#                status_code=resp.status_code)
+            update_db(resp.status_code, resp.elapsed.microseconds)
+            return (resp.text, resp.status_code, resp.headers.items())
         except requests.exceptions.ConnectionError as e:
             print("Connection not available to the backend: %s !!!"
                   % bknd_srv)

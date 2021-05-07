@@ -7,6 +7,7 @@ class Backend(BaseModel):
     backend_name: str
     path_prefix: str
     match_labels: Dict
+    service_url_to_pick: int = 0
     service_urls: List[AnyUrl] = []
 
 
