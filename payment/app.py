@@ -32,6 +32,8 @@ def get_payment():
 
 @app.route("/api/payment/history")
 def get_payment_history():
+    raise Exception("My custom Internal Server Error")
+    """
     resp = {
         "message": "Internal Server Error from payment !!!",
         "service_name": "payment"
@@ -41,7 +43,7 @@ def get_payment_history():
         'message': resp
     }
     return flask.jsonify(schema)
-
+    """
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 4000))
